@@ -1,0 +1,24 @@
+{
+  "name": "email",
+  "version": "1.0.0",
+  "description": "For making temporary emails",
+  "main": "server.js",
+  "dependencies": {
+    "smtp-server": "^3.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanielKRing1/EmailServer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanielKRing1/EmailServer/issues"
+  },
+  "homepage": "https://github.com/DanielKRing1/EmailServer#readme"
+}
