@@ -1,10 +1,11 @@
+const { createToken } = require('../util/auth');
+
 module.exports = {
     getAccount: (req, res) => {
         // User was authenticated by jwt middleware
         const userId = req.user.id;
-        console.log(userId);
 
-        // Get account
+        // GET ACCOUNT
 
 
         // Return account
@@ -13,8 +14,20 @@ module.exports = {
         });
     },
 
+    // Responds with a test token
+    getGenericJwt: async(req, res) => {
+        const randUser = {
+            user: {
+                id: '123'
+            }
+        }
+
+        const token = await createToken(randUser);
+        res.status(200).send(token);
+    },
+
     createAccount: (req, res) => {
-        // Make account
+        // MAKE ACCOUNT
 
 
         // Send response
