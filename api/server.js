@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express       = require('express');
 const app           = express();
 const helmet        = require('helmet');
@@ -8,6 +9,8 @@ const bodyParser    = require('body-parser');
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+const { login } = require('./util/customMiddleware');
+app.use(login);
 
 
 // ROUTER
