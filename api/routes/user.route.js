@@ -1,14 +1,14 @@
 const express = require('express');
-const userCtrl = require('../controllers/userCtrl');
+const userController = require('../controllers/user.controller');
 const { isLoggedIn } = require('../utils/customMiddleware');
 
 const router = express.Router(); // eslint-disable-line new-cap
 
 router.route('/')
-  .get(isLoggedIn, userCtrl.getAccount)
-  .post(userCtrl.createAccount);
+  .get(isLoggedIn, userController.getAccount)
+  .post(userController.createAccount);
 
 router.route('/test-jwt')
-  .get(userCtrl.getGenericJwt);
+  .get(userController.getGenericJwt);
 
 module.exports = router;
