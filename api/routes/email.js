@@ -1,15 +1,18 @@
 const emailCtrl = require('../controllers/emailCtrl');
+const { isLoggedIn } = require('../util/customMiddleware');
 
 module.exports = (router) => {
     router
-        .route('./email/test')
+        .route('/email/single')
         .get(
+            isLoggedIn,
             emailCtrl.getEmail
         );
 
     router
-        .route('./email/test')
-        .post(
-            emailCtrl.createEmail
+        .route('/email/all')
+        .get(
+            isLoggedIn,
+            emailCtrl.getAllEmails
         );
 }
