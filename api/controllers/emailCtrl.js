@@ -1,27 +1,29 @@
+const httpStatus = require('http-status');
+
 module.exports = {
-    getEmail: (req, res) => {
-        // User was authenticated by jwt middleware
-        const userId = req.user.id;
-        console.log(userId);
+  getEmail: (req, res) => {
+    // User was authenticated by jwt middleware
+    const userId = req.user.id;
+    console.log(userId);
 
-        // GET EMAIL
+    // GET EMAIL
 
-        // Respond
-        res.status(200).send({
-            Email: 'Hello World!'
-        });
-    },
+    // Respond
+    res.status(httpStatus.OK).send({
+      Email: 'Hello World!',
+    });
+  },
 
-    getAllEmails: (req, res) => {
-        // User was authenticated by jwt middleware
-        const userId = req.user.id;
-        console.log(userId);
+  getAllEmails: (req, res) => {
+    // User was authenticated by jwt middleware
+    const userId = req.user.id;
+    console.log(userId);
 
-        // GET ALL EMAILS
+    // GET ALL EMAILS
 
-        // Respond
-        res.status(200).send({
-            Email: 'Hello World!'
-        });
-    }
-}
+    // Respond
+    res.status(httpStatus.OK).send({
+      Email: 'Hello World!',
+    });
+  },
+};
