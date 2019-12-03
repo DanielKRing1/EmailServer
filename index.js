@@ -7,3 +7,4 @@ require('./api/server');
 
 // Require database server?
 // ...
+require('./api/databases/dynamodb');

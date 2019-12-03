@@ -4,17 +4,22 @@
   "description": "For making temporary emails",
   "main": "index.js",
   "dependencies": {
+    "aws-sdk": "^2.582.0",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
+    "dynamoose": "^1.11.1",
     "express": "^4.17.1",
     "helmet": "^3.21.2",
     "jsonwebtoken": "^8.5.1",
-    "smtp-server": "^3.5.0"
+    "smtp-server": "^3.5.0",
+    "uuid": "^3.3.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "dynalite": "^3.1.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
