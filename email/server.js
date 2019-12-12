@@ -19,10 +19,7 @@ const server = new SMTPServer({
     // onClose,
     // onMailFrom,
     // onRcptTo,
-    onData(stream, session, callback) {
-        stream.pipe(process.stdout); // print message to console
-        stream.on("end", callback);
-    }
+    onData
 });
 
 const PORT = process.env.EMAIL_PORT || 3006;
@@ -48,6 +45,7 @@ async function onData(stream, session, callback) {
     let parsedMail = await simpleParser(stream);
     console.log(parsedMail);
     
-    //stream.pipe(process.stdout); // print message to console
+    // stream.pipe(process.stdout); // print message to console
+    // stream.on("end", callback);
     stream.on('end', () => console.log('End---------------------------------------------------'));
 }
