@@ -12,15 +12,12 @@ const tlru = new TLRU(HOUR_TTL, {
 
 const server = new SMTPServer({
     // disable STARTTLS to allow authentication in clear text mode
-    disabledCommands: ['AUTH'],
+    disabledCommands: ['STARTTLS', 'AUTH'],
     logger: true,
-    onAuth,
-    onConnect,
-    onClose,
-    onMailFrom,
-    onRcptTo,
-    onData,
-
+    onData(stream, session, callback) {
+        stream.pipe(process.stdout); // print message to console
+        stream.on("end", callback);
+    }
 });
 
 const PORT = process.env.EMAIL_PORT || 3006;
