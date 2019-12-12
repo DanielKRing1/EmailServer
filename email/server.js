@@ -1,35 +1,51 @@
 // smtp.js
-const {SMTPServer} = require('smtp-server');
+const { SMTPServer } = require('smtp-server');
+const simpleParser = require('mailparser').simpleParser;
+const TLRU = require('./util/fast-tlru');
+
+const MILLI_TO_NANO = 1000000;
+const HOUR_TTL = 1000 * 60 * 60 * MILLI_TO_NANO;
+const tlru = new TLRU(HOUR_TTL, {
+    useGlobalTtl: true,
+    triggerLength: 100
+});
 
 const server = new SMTPServer({
     // disable STARTTLS to allow authentication in clear text mode
-    disabledCommands: ['STARTTLS', 'AUTH'],
+    disabledCommands: ['AUTH'],
     logger: true,
-    onData(stream, session, callback){
-        stream.pipe(process.stdout); // print message to console
-        stream.on('end', callback);
-    },
+    onAuth,
+    onConnect,
+    onClose,
+    onMailFrom,
+    onRcptTo,
+    onData,
+
 });
 
 const PORT = process.env.EMAIL_PORT || 3006;
 server.listen(PORT, () => console.log(`Running email server on port ${PORT}!`));
 
 
-// const SMTPServer = require("smtp-server").SMTPServer;
-
-// const options = {
-//     onData(stream, session, callback) {
-//         stream.pipe(process.stdout); // print message to console
-//         stream.on("end", callback);    }
-// };
-// const server = new SMTPServer(options);
-
-// const PORT = 3000 || process.env.PORT;
-// server.listen(PORT, () => console.log(`Running email server on port ${PORT}!`));
-
-// server.on('error', err => {
-//     console.log(`Error: ${err.message}`);
-// });
-// function callback(data) {
-//     console.log(`On data: ${data}`);
-// }
+function onAuth(auth, session, callback){
+    console.log('onAuth');
+}
+function onConnect(session, callback) {
+    console.log('Connected!');
+}
+function onClose(session){
+    console.log('onClose');
+}
+function onMailFrom(address, session, callback){
+    console.log('onMailFrom');
+}
+function onRcptTo(address, session, callback){
+    console.log('onRcptTo');
+}
+async function onData(stream, session, callback) {
+    let parsedMail = await simpleParser(stream);
+    console.log(parsedMail);
+    
+    //stream.pipe(process.stdout); // print message to console
+    stream.on('end', () => console.log('End---------------------------------------------------'));
+}
