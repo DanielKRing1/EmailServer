@@ -44,6 +44,8 @@ function onRcptTo(address, session, callback){
 async function onData(stream, session, callback) {
     let parsedMail = await simpleParser(stream);
     console.log(parsedMail);
+
+    console.log('\n\nNew Packeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeet--------------------------------------------------------------\n\n\n\n\n');
     
     // stream.pipe(process.stdout); // print message to console
     // stream.on("end", callback);
