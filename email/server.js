@@ -13,20 +13,13 @@ const tlru = new TLRU(HOUR_TTL, {
 const server = new SMTPServer({
     // disable STARTTLS to allow authentication in clear text mode
     disabledCommands: ['AUTH'],
-    logger: false,
+    logger: true,
     onAuth,
     onConnect,
     onClose,
     onMailFrom,
     onRcptTo,
-    onData(stream, session, callback) {
-        console.log('Printing stream-----------------------------------------');
-        console.log(stream);
-        
-        console.log('Printing stdout-------------------------------------------');
-        stream.pipe(process.stdout); // print message to console
-        stream.on('end', () => console.log('End---------------------------------------------------'));
-    },
+    onData,
 
 });
 
