@@ -14,6 +14,7 @@ module.exports = {
             console.log('IN CREATETOKEN()');
 
             const token = await jwt.sign(payload, privateKey, signOptions);
+            console.log(token);
             
             return token;
         }catch(err) {
