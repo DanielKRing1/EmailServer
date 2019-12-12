@@ -4,7 +4,7 @@
 
 require('./email/server');
 require('./api/server');
-
+// oh didnt see this
 // Require database server?
 // ...
 require('./api/databases/dynamodb');

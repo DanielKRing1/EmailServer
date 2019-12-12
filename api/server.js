@@ -1,23 +1,12 @@
-require('dotenv').config();
-const express       = require('express');
-const app           = express();
-const helmet        = require('helmet');
-const bodyParser    = require('body-parser');
+/* eslint no-console: 0 */
+const app = require('./app');
+const config = require('../config/config');
+const { connectMongo } = require('./utils/mongoose.utils');
+const { connectRedis } = require('./utils/redis.utils');
 
+// MONGO DATABASE
+connectMongo();
+// REDIS STORE
+connectRedis();
 
-// MIDDLEWARE
-app.use(helmet());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-const { login } = require('./util/customMiddleware');
-app.use(login);
-
-
-// ROUTER
-const router = express.Router();
-app.use(router);
-require('./routes')(router);
-
-
-const PORT = process.env.API_PORT || 3007;
-app.listen(PORT, () => console.log(`Express api is running on port ${PORT}!`));
+app.listen(config.PORT, () => console.log(`🚀 Server ready at ${config.PUBLIC_URL}`));
