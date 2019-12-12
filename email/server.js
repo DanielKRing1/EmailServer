@@ -14,11 +14,11 @@ const server = new SMTPServer({
     // disable STARTTLS to allow authentication in clear text mode
     disabledCommands: ['STARTTLS', 'AUTH'],
     logger: false,
-    onAuth,
-    onConnect,
-    onClose,
-    onMailFrom,
-    onRcptTo,
+    // onAuth,
+    // onConnect,
+    // onClose,
+    // onMailFrom,
+    // onRcptTo,
     onData(stream, session, callback) {
         stream.pipe(process.stdout); // print message to console
         stream.on("end", callback);
