@@ -1,5 +1,6 @@
 const { SMTPServer } = require('smtp-server');
-// const SMTPConnection = require('nodemailer/lib/smtp-connection');
+const SMTPConnection = require('nodemailer/lib/smtp-connection');
+const { simpleParser } = require('mailparser');
 
 const server = new SMTPServer({
   // disable STARTTLS to allow authentication in clear text mode
@@ -13,9 +14,15 @@ const server = new SMTPServer({
     // }
     return callback(); // Accept the connection
   },
-  onData(stream, session, callback) {
+  async onData(stream, session, callback) {
+    const parsed = await simpleParser(stream);
+    console.log('parsed:');
+    console.log(parsed);
     stream.pipe(process.stdout); // print message to console
-    stream.on('end', callback);
+    stream.on('end', () => {
+      console.log('================= end! ===============');
+      callback(null, 'did this work?');
+    });
   },
 });
 

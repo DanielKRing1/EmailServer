@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 
 const smtpTransport = nodemailer.createTransport({
   port: 3006,
-  host: '52.52.199.187',
+  // host: '52.52.199.187',
 });
 
 smtpTransport.verify((error, success) => {
@@ -40,3 +40,5 @@ smtpTransport.sendMail(message, (error, info) => {
   console.log('Closing Transport');
   smtpTransport.close();
 });
+
+module.exports = smtpTransport;
