@@ -23,11 +23,15 @@
     "nodemon": "^2.0.1",
     "nyc": "^14.1.1",
     "redis": "^2.8.0",
-    "smtp-server": "^3.5.0",
     "supertest": "^4.0.2",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "smtp-server": "^3.5.0",
+    "mailparser": "^2.7.7",
+    "tlru": "^1.0.0",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
+    "dynalite": "^3.1.0",
     "eslint": "^6.7.1",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",

@@ -1,21 +1,45 @@
+// smtp.js
 const { SMTPServer } = require('smtp-server');
-// const SMTPConnection = require('nodemailer/lib/smtp-connection');
+const { simpleParser } = require('mailparser');
+const TLRU = require('./util/fast-tlru');
+
+const MILLI_TO_NANO = 1000000;
+const HOUR_TTL = 1000 * 60 * 60 * MILLI_TO_NANO;
+const tlru = new TLRU(HOUR_TTL, {
+  useGlobalTtl: true,
+  triggerLength: 100,
+});
 
 const server = new SMTPServer({
   // disable STARTTLS to allow authentication in clear text mode
-  disabledCommands: ['STARTTLS', 'AUTH'],
+  disabledCommands: ['AUTH', 'STARTTLS'],
   logger: true,
-  onConnect(session, callback) {
-    console.log('woah');
-    console.log('session.remoteAddress:', session.remoteAddress);
-    // if (session.remoteAddress === '127.0.0.1') {
-    //   return callback(new Error('No connections from localhost allowed'));
-    // }
-    return callback(); // Accept the connection
+  onAuth: (auth, session, callback) => {
+    console.log('onAuth');
+    callback();
   },
-  onData(stream, session, callback) {
-    stream.pipe(process.stdout); // print message to console
-    stream.on('end', callback);
+  onConnect: (session, callback) => {
+    console.log('Connected!');
+    callback();
+  },
+  onClose: (session) => {
+    console.log('onClose');
+  },
+  onMailFrom: (address, session, callback) => {
+    console.log('onMailFrom');
+    callback();
+  },
+  onRcptTo: (address, session, callback) => {
+    console.log('onRcptTo');
+    callback();
+  },
+  onData: async (stream, session, callback) => {
+    const parsedMail = await simpleParser(stream);
+    console.log(parsedMail);
+
+    // stream.pipe(process.stdout); // print message to console
+    stream.on('end', () => console.log('End---------------------------------------------------'));
+    callback();
   },
 });
 
@@ -26,36 +50,3 @@ server.on('error', (err) => {
 
 const PORT = process.env.EMAIL_PORT || 3006;
 server.listen(PORT, () => console.log(`Running email server on port ${PORT}!`));
-
-// const connection = new SMTPConnection({
-//   port: 3006,
-//   logger: true,
-// });
-
-// connection.connect(() => console.log('connected!'));
-
-// const envelope = { from: 'daniel@gmail.com', to: 'dring@gmail.com' };
-// const message = 'test';
-
-// sudo node ./email/server.js &sendmail test@localhost < email.txt
-
-// connection.send(envelope, message, (err) => console.log(err));
-
-// const SMTPServer = require("smtp-server").SMTPServer;
-
-// const options = {
-//     onData(stream, session, callback) {
-//         stream.pipe(process.stdout); // print message to console
-//         stream.on("end", callback);    }
-// };
-// const server = new SMTPServer(options);
-
-// const PORT = 3000 || process.env.PORT;
-// server.listen(PORT, () => console.log(`Running email server on port ${PORT}!`));
-
-// server.on('error', err => {
-//     console.log(`Error: ${err.message}`);
-// });
-// function callback(data) {
-//     console.log(`On data: ${data}`);
-// }
