@@ -11,7 +11,8 @@ const emailSchema = new dynamoose.Schema({
         rangeKey: true
     },
     subject: String,
-    body: String
+    body: String,
+    isNew: Boolean
 },
 
 {
