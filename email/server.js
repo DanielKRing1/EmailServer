@@ -1,14 +1,14 @@
 // smtp.js
 const { SMTPServer } = require('smtp-server');
 const simpleParser = require('mailparser').simpleParser;
-const TLRU = require('./util/fast-tlru');
+// const TLRU = require('./util/fast-tlru');
 
-const MILLI_TO_NANO = 1000000;
-const HOUR_TTL = 1000 * 60 * 60 * MILLI_TO_NANO;
-const tlru = new TLRU(HOUR_TTL, {
-    useGlobalTtl: true,
-    triggerLength: 100
-});
+// const MILLI_TO_NANO = 1000000;
+// const HOUR_TTL = 1000 * 60 * 60 * MILLI_TO_NANO;
+// const tlru = new TLRU(HOUR_TTL, {
+//     useGlobalTtl: true,
+//     triggerLength: 100
+// });
 
 const server = new SMTPServer({
     // disable STARTTLS to allow authentication in clear text mode
