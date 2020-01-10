@@ -17,12 +17,21 @@ const server = new SMTPServer({
   async onData(stream, session, callback) {
     const parsed = await simpleParser(stream);
     console.log('parsed:');
-    console.log(parsed);
-    stream.pipe(process.stdout); // print message to console
-    stream.on('end', () => {
-      console.log('================= end! ===============');
-      callback(null, 'did this work?');
-    });
+
+    const { from, to, date, subject, html, text, textAsHtml, attachments } = parsed;
+    console.log(parsed)
+    console.log(`
+    From: ${from.text}\n
+    To: ${to.text}\n
+    Date: ${date}\n
+    Subject: ${subject}\n
+    Html: ${html}\n
+    `);
+    // stream.pipe(process.stdout); // print message to console
+    // stream.on('end', () => {
+    //   console.log('================= end! ===============');
+    //   callback(null, 'did this work?');
+    // });
   },
 });
 
